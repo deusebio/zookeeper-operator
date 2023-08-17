@@ -425,6 +425,13 @@ class ZooKeeperCharm(CharmBase):
             event.fail(msg)
             return
 
+        if not self.upgrade.idle:
+            msg = "Cannot set password while upgrading " + \
+                f"(upgrade_state: {self.upgrade.cluster_state})"
+            logger.error(msg)
+            event.fail(msg)
+            return
+
         username = event.params.get("username", "super")
         if username not in CHARM_USERS:
             msg = f"The action can be run only for users used by the charm: {CHARM_USERS} not {username}."

@@ -4,6 +4,7 @@
 """Manager for handling ZooKeeper in-place upgrades."""
 
 import logging
+import time
 from functools import cached_property
 from typing import TYPE_CHECKING
 
@@ -133,6 +134,8 @@ class ZooKeeperUpgrade(DataUpgrade):
 
         logger.info(f"{self.charm.unit.name} upgrading service...")
         self.charm.snap.restart_snap_service()
+
+        time.sleep(30)
 
         try:
             logger.debug("Running post-upgrade check...")
