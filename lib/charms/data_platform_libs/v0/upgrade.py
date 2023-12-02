@@ -748,6 +748,7 @@ class DataUpgrade(Object, ABC):
                 "/var/snap/charmed-zookeeper/common/var/lib/zookeeper-2/data-log",
                 "/var/snap/charmed-zookeeper/common/var/lib/zookeeper/data-log"
             )
+            os.system("chown -R snap_daemon:snap_daemon /var/snap/charmed-zookeeper/common/var/lib/zookeeper")
 
         if not self.peer_relation:
             event.defer()
