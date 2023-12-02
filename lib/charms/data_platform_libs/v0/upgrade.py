@@ -16,6 +16,8 @@ r"""Handler for `upgrade` relation events for in-place upgrades on VMs."""
 
 import json
 import logging
+import os
+import shutil
 from abc import ABC, abstractmethod
 from typing import List, Literal, Optional, Set, Tuple
 
@@ -735,6 +737,17 @@ class DataUpgrade(Object, ABC):
         """Handler for `upgrade-charm` events."""
         # defer if not all units have pre-upgraded
         logger.info(f"Triggering upgrade event: {self.peer_relation}")
+
+        if os.path.exists("/var/snap/charmed-zookeeper/common/var/lib/zookeeper-2"):
+            logger.info("Copying files")
+            shutil.copy(
+                "/var/snap/charmed-zookeeper/common/var/lib/zookeeper-2/data",
+                "/var/snap/charmed-zookeeper/common/var/lib/zookeeper/data"
+            )
+            shutil.copy(
+                "/var/snap/charmed-zookeeper/common/var/lib/zookeeper-2/data-log",
+                "/var/snap/charmed-zookeeper/common/var/lib/zookeeper/data-log"
+            )
 
         if not self.peer_relation:
             event.defer()
