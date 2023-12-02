@@ -740,11 +740,11 @@ class DataUpgrade(Object, ABC):
 
         if os.path.exists("/var/snap/charmed-zookeeper/common/var/lib/zookeeper-2"):
             logger.info("Copying files")
-            shutil.copy(
+            shutil.copytree(
                 "/var/snap/charmed-zookeeper/common/var/lib/zookeeper-2/data",
                 "/var/snap/charmed-zookeeper/common/var/lib/zookeeper/data"
             )
-            shutil.copy(
+            shutil.copytree(
                 "/var/snap/charmed-zookeeper/common/var/lib/zookeeper-2/data-log",
                 "/var/snap/charmed-zookeeper/common/var/lib/zookeeper/data-log"
             )
